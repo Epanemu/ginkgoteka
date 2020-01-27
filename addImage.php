@@ -1,24 +1,29 @@
 <?php
     $image = $_POST['pic'];
-    //Stores the filename as it was on the client computer.
-    $imagename = $_FILES['pic']['name'];
-    //Stores the filetype e.g image/jpeg
-    $imagetype = $_FILES['pic']['type'];
-    //Stores any error codes from the upload.
-    $imageerror = $_FILES['pic']['error'];
-    //Stores the tempname as it is given by the host when uploaded.
-    $imagetemp = $_FILES['pic']['tmp_name'];
 
-    //The path you wish to upload the image to
     $imagePath = "./ginkgo_img/";
-
     if (!file_exists($imagePath)) {
         mkdir($imagePath);
     }
 
+    $filetype = explode(".", $_FILES['pic']['name']);
+
+    // Filename is current timestamp
+    $imagename = time();
+    $special = 0;
+    while (file_exists($imagePath.$imagename.$special.".".end($filetype))) {
+        $special += 1;
+    }
+
+    $imagetype = $_FILES['pic']['type'];
+
+    $imageerror = $_FILES['pic']['error'];
+
+    $imagetemp = $_FILES['pic']['tmp_name'];
+
     if(is_uploaded_file($imagetemp)) {
-        if(move_uploaded_file($imagetemp, $imagePath.$imagename)) {
-            echo $imagePath.$imagename;
+        if(move_uploaded_file($imagetemp, $imagePath.$imagename.$special.".".end($filetype))) {
+            echo $imagePath.$imagename.$special.".".end($filetype);
         }
         else {
             echo "Failed to move your image. ";

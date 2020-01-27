@@ -149,92 +149,88 @@ function addPoint() {
 		}
 	});
 
-	// Promise.all(dist_check).then(() => {
-		var author = JAK.gel("add_point_author").value;
-	    author = author.trim();    
-		if (!too_close && adding && (author !== "" || confirm("Přidat do Ginkgotéky bez nálezce?"))) {
+	var author = JAK.gel("add_point_author").value;
+	author = author.trim();
+	if (!too_close && adding && (author !== "" || confirm("Přidat do Ginkgotéky bez nálezce?"))) {
 
-			adding = false;
-	    	JAK.gel("add_point_form_container").style.visibility = "hidden";
+		adding = false;
+		JAK.gel("add_point_form_container").style.visibility = "hidden";
 
-	    	var address = JAK.gel("add_point_address").innerHTML;
-	    	
-	    	JAK.gel("add_point_author").value = "";
+		var address = JAK.gel("add_point_address").innerHTML;
 
-	    	var coords_str = newCoords.toWGS84(2).join(" ");
-	    	
-	    	var name = JAK.gel("name_input").value;
-	    	JAK.gel("name_input").value = "";
+		JAK.gel("add_point_author").value = "";
 
-	    	name = name.trim();
-	    	var name_str = escape(name);
+		var coords_str = newCoords.toWGS84(2).join(" ");
 
-			var author_str;
-	    	if (author !== "")
-		    	author_str = escape(author);
-		    else
-		    	author_str = null;
-	    	
-		    date_added = new Date(Date.now());
-			date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
+		var name = JAK.gel("name_input").value;
+		JAK.gel("name_input").value = "";
 
-			var c = new SMap.Card();
-			c.getHeader().innerHTML = "<b>"+name+"</b>";
-			c.getFooter().innerHTML = '<div style="display:flex"><p style="font-size:0.9em;flex-basis:50%;margin:0.5em 1em 0 0;">'+address+'</p><p style="font-size:0.9em;margin:0.5em 1em 0 0;">Přidal: '+(author_str===null?"Anonym":author)+"<br>("+date_str+")</p></div>";
-			c.getBody().style.margin = "0px";
-			c.getBody().innerHTML = 'The image could not be loaded';
+		name = name.trim();
+		var name_str = escape(name);
 
-			var img_path;
-			$.ajax({
-	           type: "POST",
-	           url: "addImage.php",
-			    data: new FormData($('#add_point_form')[0]),
-	            cache:false,
-	            contentType: false,
-	            processData: false,
-	           success: function(path) {
-	               	c.getBody().innerHTML = '<img src="'+path+'" style="width:100%">';
-	    			JAK.gel("img_picker").value = "";
-	        		JAK.gel("add_point_image_preview").style.display = "none";
+		var author_str;
+		if (author !== "")
+			author_str = escape(author);
+		else
+			author_str = null;
 
-	    			data = {
-	    				name: name_str,
-	    				address: address,
-	    				coords: coords_str,
-	    				author: author_str,
-	    				img_path: path
-	    			};
+			date_added = new Date(Date.now());
+		date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
 
-	    			fetch("http://data.nemecekjiri.cz/api.php/records/ginkgo_dtb/", {
-				        method: 'POST', 
-				        mode: 'cors',
-				        cache: 'no-cache', 
-				        credentials: 'same-origin',
-				        headers: {
-				            'Content-Type': 'application/json',
-				        },
-				        redirect: 'follow', // manual, *follow, error
-				        referrer: 'no-referrer', // no-referrer, *client
-				        body: JSON.stringify(data), // body data type must match "Content-Type" header
-				    })
-	           }
-	         });
+		var c = new SMap.Card();
+		c.getHeader().innerHTML = "<b>"+name+"</b>";
+		c.getFooter().innerHTML = '<div style="display:flex"><p style="font-size:0.9em;flex-basis:50%;margin:0.5em 1em 0 0;">'+address+'</p><p style="font-size:0.9em;margin:0.5em 1em 0 0;">Přidal: '+(author_str===null?"Anonym":author)+"<br>("+date_str+")</p></div>";
+		c.getBody().style.margin = "0px";
+		c.getBody().innerHTML = 'The image could not be loaded';
 
-			var g_marker = JAK.mel("div");
-			var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
-			g_marker.appendChild(g_image);
+		$.ajax({
+			type: "POST",
+			url: "addImage.php",
+			data: new FormData($('#add_point_form')[0]),
+			cache:false,
+			contentType: false,
+			processData: false,
+			success: function(path) {
+				c.getBody().innerHTML = '<img src="'+path+'" style="width:100%">';
+				JAK.gel("img_picker").value = "";
+				JAK.gel("add_point_image_preview").style.display = "none";
 
-			new_marker = new SMap.Marker(newCoords, null, {url:g_marker}); 
-			new_marker.decorate(SMap.Marker.Feature.Card, c);
-			layer.addMarker(new_marker);
-			smaller_clusters();
+				data = {
+					name: name_str,
+					address: address,
+					coords: coords_str,
+					author: author_str,
+					img_path: path
+				};
 
-			tmp_layer.removeAll();
-			tmp_layer.clear();
+				fetch("http://data.nemecekjiri.cz/api.php/records/ginkgo_dtb/", {
+					method: 'POST',
+					mode: 'cors',
+					cache: 'no-cache',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					redirect: 'follow', // manual, *follow, error
+					referrer: 'no-referrer', // no-referrer, *client
+					body: JSON.stringify(data), // body data type must match "Content-Type" header
+				})
+			}
+		});
 
-		}
-	// });
+		var g_marker = JAK.mel("div");
+		var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
+		g_marker.appendChild(g_image);
 
+		new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
+		new_marker.decorate(SMap.Marker.Feature.Card, c);
+		layer.addMarker(new_marker);
+		smaller_clusters();
+
+		tmp_layer.removeAll();
+		tmp_layer.clear();
+
+	}
 	
 }
 
