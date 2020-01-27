@@ -140,23 +140,20 @@ function addPoint() {
 	/* check if not too close */
 	var too_close = false;
 
-	dist_check = [];//new Promise((resolve, reject) => {
 	ginkgos.forEach((d, i) => {
-	var coords_str = d.coords.split(" ")
-	var coords = SMap.Coords.fromWGS84(coords_str[0], coords_str[1]);
-	dist_check.push(coords.getAltitude()
-		.then(alt => {
-			if (coords.distance(newCoords, alt) < 20) {
-				alert("Není možné přidat ginkgo tak blízko k jinému!");
-				too_close = true;
-			}
-		}))
+		var coords_str = d.coords.split(" ")
+		var coords = SMap.Coords.fromWGS84(coords_str[0], coords_str[1]);
+		if (coords.distance(newCoords) < 20) {
+			alert("Není možné přidat ginkgo tak blízko k jinému!");
+			too_close = true;
+		}
 	});
-	//});
-	Promise.all(dist_check).then(() => {
+
+	// Promise.all(dist_check).then(() => {
 		var author = JAK.gel("add_point_author").value;
 	    author = author.trim();    
 		if (!too_close && adding && (author !== "" || confirm("Přidat do Ginkgotéky bez nálezce?"))) {
+
 			adding = false;
 	    	JAK.gel("add_point_form_container").style.visibility = "hidden";
 
@@ -236,7 +233,7 @@ function addPoint() {
 			tmp_layer.clear();
 
 		}
-	});
+	// });
 
 	
 }
