@@ -10,6 +10,9 @@
             $src = imagecreatefrompng($file);
         }
         $dst = imagecreatetruecolor($newwidth, $newheight);
+        // probably useless, but in case of transparent images, the background will be set to white
+        $white = imagecolorallocate($dst, 255, 255, 255);
+        imagefill($dst, 0, 0, $white);
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
         return $dst;
