@@ -181,7 +181,7 @@ function addPoint() {
 		else
 			author_str = null;
 
-			date_added = new Date(Date.now());
+		date_added = new Date(Date.now());
 		date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
 
 		var c = new SMap.Card();
@@ -209,6 +209,16 @@ function addPoint() {
 					author: author_str,
 					img_path: path
 				};
+
+				local_data = {
+					name: data.name,
+					address: data.address,
+					coords: data.coords,
+					author: data.author,
+					img_path: data.img_path,
+					date_added: date_str
+				};
+				ginkgos.push(local_data);
 
 				fetch("http://data.nemecekjiri.cz/api.php/records/ginkgo_dtb/", {
 					method: 'POST',
