@@ -19,7 +19,8 @@
 					<input type="text" name="name" id="name_input" placeholder="Název" required/>
 
 					<p>Obrázek Ginkga:</p>
-					<input type="file" name="pic" id="img_picker" accept="image/*" onchange="showImage(this);" required/><br>
+					<input type="file" name="pic" id="img_picker" accept="image/png,image/jpeg" onchange="showImage(this);" required/><br>
+					<p id="incorrect_image_type"></p>
 					<img id="add_point_image_preview" />
 					<div id="add_point_footer">
 						<input type="text" name="author" placeholder="Nálezce" id="add_point_author"  size="10" >

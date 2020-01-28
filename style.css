@@ -98,6 +98,12 @@
 	padding: 8px;
 }
 
+#incorrect_image_type {
+	display: none;
+	color: red;
+	margin-bottom: 5px !important;
+}
+
 #add_point_image_preview {
 	display: none;
 	max-width: 280px;

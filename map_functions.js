@@ -1,11 +1,11 @@
 var center = SMap.Coords.fromWGS84(14.4716, 48.9755); //pre-defined center in Česke Budějovice
 var m = new SMap(JAK.gel("map"), center, 13);
 m.addDefaultLayer(SMap.DEF_BASE).enable();
-//m.addDefaultControls();	 
+//m.addDefaultControls();
 var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM); /* mouse control */
-m.addControl(mouse);  
+m.addControl(mouse);
 
-var layer = new SMap.Layer.Marker(); 
+var layer = new SMap.Layer.Marker();
 m.addLayer(layer).enable();
 
 /* set up clusters */
@@ -24,7 +24,7 @@ var clusterer = new SMap.Marker.Clusterer(m, 50, constructor);
 layer.setClusterer(clusterer);
 
 // make the cluster smaller not at all effective, but I didn't find another way
-function smaller_clusters(e, elm) { 
+function smaller_clusters(e, elm) {
     var clust = clusterer.getClusters();
 	for (var huh in clust) {
 		clust[huh].setSize(0,50);
@@ -51,8 +51,8 @@ function loadMap(data) {
 		date_added = new Date(d.date_added);
 		date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
 
-		let author = "Anonym" 
-		if (d.author !== null) 
+		let author = "Anonym"
+		if (d.author !== null)
 			author = unescape(d.author);
 
 
@@ -69,7 +69,7 @@ function loadMap(data) {
 		coords_str = d.coords.split(" ")
 		coords = SMap.Coords.fromWGS84(coords_str[0], coords_str[1]);
 
-		markers.push(new SMap.Marker(coords, null, {url:g_marker})); 
+		markers.push(new SMap.Marker(coords, null, {url:g_marker}));
 		markers[k].decorate(SMap.Marker.Feature.Card, c);
 		k++;
 	});
@@ -124,8 +124,8 @@ function addInTheMiddle() {
 	addingPoint(coords);
 }
 
-var click = 
-m.getSignals().addListener(window, "map-contextmenu", 
+var click =
+m.getSignals().addListener(window, "map-contextmenu",
 	function(signal) {
 		var event = signal.data.event;
 		var coords = SMap.Coords.fromEvent(event, m);
@@ -135,6 +135,13 @@ m.getSignals().addListener(window, "map-contextmenu",
 
 // functions for the html
 function addPoint() {
+	const fileType = JAK.gel("img_picker").files[0]['type'];
+	const validImageTypes = ['image/jpeg', 'image/png'];
+	if (!validImageTypes.includes(fileType)) {
+		alert("Vyberte obrázek ve formátu png nebo jpeg.")
+		return;
+	}
+	
 	var newCoords = tmp_marker.getCoords();
 	
 	/* check if not too close */
@@ -250,19 +257,29 @@ function discardPoint() {
 
 function showImage(input) {
 	if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            JAK.gel('add_point_image_preview').src = e.target.result;
-            JAK.gel("add_point_image_preview").style.display = "block";
-        };
-
-        reader.readAsDataURL(input.files[0]);
+		var reader = new FileReader();
+		
+		const fileType = input.files[0]['type'];
+		const validImageTypes = ['image/jpeg', 'image/png'];
+		if (!validImageTypes.includes(fileType)) {
+			JAK.gel('incorrect_image_type').innerHTML = "<b>Tento typ není podporován, prosím vyberte obrázek ve formátu JPG nebo PNG.</b>";
+			JAK.gel("incorrect_image_type").style.display = "block";
+			JAK.gel("add_point_image_preview").style.display = "none";
+		} else {
+			reader.onload = function (e) {
+				JAK.gel('add_point_image_preview').src = e.target.result;
+				JAK.gel("add_point_image_preview").style.display = "block";
+				JAK.gel("incorrect_image_type").style.display = "none";
+			};
+	
+			reader.readAsDataURL(input.files[0]);
+		}
+		
     }
 }
 
 /*
-function click2(e, elm) { 
+function click2(e, elm) {
     var coords = SMap.Coords.fromEvent(e.data.event, m);
     alert(coords.toWGS84(2).reverse().join(" "))
 }
