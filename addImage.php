@@ -1,16 +1,14 @@
 <?php
-    function resize_image($file, $w, $h, $crop=FALSE) {
+    function resize_image_width($file, $ext, $w) {
         list($width, $height) = getimagesize($file);
-        $r = $width / $height;
-        if ($w/$h > $r) {
-            $newwidth = $h*$r;
-            $newheight = $h;
-        } else {
-            $newheight = $w/$r;
-            $newwidth = $w;
-        }
+        $newheight = ($w/$width) * $height;
+        $newwidth = $w;
 
-        $src = imagecreatefromjpeg($file);
+        if ($ext == ".jpg") {
+            $src = imagecreatefromjpeg($file);
+        } else {
+            $src = imagecreatefrompng($file);
+        }
         $dst = imagecreatetruecolor($newwidth, $newheight);
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
@@ -39,16 +37,22 @@
 
         // Filename is current timestamp
         $imagename = time();
+        // and a number in case of collision
         $special = 0;
-        while (file_exists($imagePath.$imagename.$special.$ext)) {
+        while (file_exists($imagePath.$imagename.$special.".jpg")) {
             $special += 1;
         }
 
         $imagetemp = $_FILES['pic']['tmp_name'];
 
         if(is_uploaded_file($imagetemp)) {
-            if(move_uploaded_file($imagetemp, $imagePath.$imagename.$special.$ext)) {
-                echo $imagePath.$imagename.$special.$ext;
+            if(move_uploaded_file($imagetemp, $imagePath."tmp".$ext)) {
+                $resized = resize_image_width($imagePath."tmp".$ext, $ext, 280);
+                // save to a file
+                imagejpeg($resized, $imagePath.$imagename.$special.".jpg");
+                imagedestroy($resized);
+                // return the name of the file
+                echo $imagePath.$imagename.$special.".jpg";
             }
             else {
                 echo "Error: Failed to move your image. ";
@@ -58,6 +62,6 @@
             echo "Error: Failed to upload your image.";
         }
     } else {
-        echo "Error: Unsupported filetype"
+        echo "Error: Unsupported filetype";
     }
 ?>
