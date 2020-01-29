@@ -18,6 +18,26 @@
         return $dst;
     }
 
+    function addToDatabase($data) {
+        include('config.php');
+        
+        $db = new mysqli($server, $user, $password, $dtb_name)
+        or die('Error connecting to MySQL server.');
+
+        $stmt = mysqli_prepare($db,"INSERT INTO ginkgo_dtb (name, author, coords, address, img_path, date_added, ip_address) VALUES (?,?,?,?,?,?,?)");
+
+        mysqli_stmt_bind_param($stmt, "sssssss", 
+            $data["name"], $data["author"], $data["coords"], $data["address"], $data["img_path"], $data["date_added"], $data["ip_address"]);
+        
+        mysqli_stmt_execute($stmt);
+        if (mysqli_stmt_affected_rows($stmt))
+            echo json_encode($data, JSON_PRETTY_PRINT);
+        else
+            echo 'Error saving into database.';
+
+        mysqli_close($db);
+    }
+
     $image = $_POST['pic'];
 
     $ext = "";
@@ -54,8 +74,19 @@
                 // save to a file
                 imagejpeg($resized, $imagePath.$imagename.$special.".jpg");
                 imagedestroy($resized);
-                // return the name of the file
-                echo $imagePath.$imagename.$special.".jpg";
+                                
+                $data = [
+                    "name" => $_POST["name"],
+                    "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],
+                    "coords" => $_POST["coords"],
+                    "address" => $_POST["address"],
+                    "img_path" => $imagePath.$imagename.$special.".jpg",
+                    "date_added" => date("Y-m-d H:i:s"),
+                    "ip_address" => $_SERVER['REMOTE_ADDR'],
+                ];
+
+                // on success returns json of these data
+                addToDatabase($data);
             }
             else {
                 echo "Error: Failed to move your image. ";

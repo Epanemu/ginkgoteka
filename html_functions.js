@@ -9,7 +9,8 @@ function addPoint() {
 	
 	var newCoords = tmp_marker.getCoords();
 	
-	/* check if not too close */
+    /* check if not too close */
+    // TODO: udelat pres layer a getmarkers... nemusim pak pridavat do ginkgos, nemusim si je mozna ani pamatovat
 	var too_close = false;
 
 	ginkgos.forEach((d, i) => {
@@ -30,12 +31,9 @@ function addPoint() {
 
 		var address = JAK.gel("add_point_address").innerHTML;
 
-		JAK.gel("add_point_author").value = "";
-
 		var coords_str = newCoords.toWGS84(2).join(" ");
 
 		var name = JAK.gel("name_input").value;
-		JAK.gel("name_input").value = "";
 
 		name = name.trim();
 		var name_str = escape(name);
@@ -53,50 +51,32 @@ function addPoint() {
 		c.getHeader().innerHTML = "<b>"+name+"</b>";
 		c.getFooter().innerHTML = '<div style="display:flex"><p style="font-size:0.9em;flex-basis:50%;margin:0.5em 1em 0 0;">'+address+'</p><p style="font-size:0.9em;margin:0.5em 1em 0 0;">Přidal: '+(author_str===null?"Anonym":author)+"<br>("+date_str+")</p></div>";
 		c.getBody().style.margin = "0px";
-		c.getBody().innerHTML = 'The image could not be loaded';
+		c.getBody().innerHTML = 'Obrázek se nepodařilo načíst';
+
+        var data_to_send = new FormData($('#add_point_form')[0]);
+        data_to_send.append("coords", coords_str);
+        data_to_send.append("address", address);
 
 		$.ajax({
 			type: "POST",
 			url: "addImage.php",
-			data: new FormData($('#add_point_form')[0]),
+			data: data_to_send,
 			cache:false,
 			contentType: false,
 			processData: false,
-			success: function(path) {
-				c.getBody().innerHTML = '<img src="'+path+'" style="width:100%">';
+			success: function(dataString) {
+				data = JSON.parse(dataString);
+
+                JAK.gel("add_point_author").value = "";
+                JAK.gel("name_input").value = "";
+
+				c.getBody().innerHTML = '<img src="'+data.img_path+'" style="width:100%">';
 				JAK.gel("img_picker").value = "";
 				JAK.gel("add_point_image_preview").style.display = "none";
-
-				data = {
-					name: name_str,
-					address: address,
-					coords: coords_str,
-					author: author_str,
-					img_path: path
-				};
-
-				local_data = {
-					name: data.name,
-					address: data.address,
-					coords: data.coords,
-					author: data.author,
-					img_path: data.img_path,
-					date_added: date_str
-				};
-				ginkgos.push(local_data);
-
-				fetch("http://data.nemecekjiri.cz/api.php/records/ginkgo_dtb/", {
-					method: 'POST',
-					mode: 'cors',
-					cache: 'no-cache',
-					credentials: 'same-origin',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					redirect: 'follow', // manual, *follow, error
-					referrer: 'no-referrer', // no-referrer, *client
-					body: JSON.stringify(data), // body data type must match "Content-Type" header
-				})
+			},
+			error: (jqXHR, textStatus, errorThrown) => {
+				alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
+				console.error(textStatus+": "+errorThrown);
 			}
 		});
 
