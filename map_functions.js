@@ -33,8 +33,6 @@ function smaller_clusters(e, elm) {
 }
 m.getSignals().addListener(window, "zoom-stop", smaller_clusters);
 
-var ginkgos;	/* container for all data that is received from the server */
-
 // reading ginkgos
 const run = () => {
 	fetch('readGinkgos.php')
@@ -45,8 +43,6 @@ const run = () => {
 function loadMap(data) {
 	var markers = [];
 	var k = 0;
-
-	ginkgos = data;
 
 	data.forEach((d, i) => {
 		console.log(d);

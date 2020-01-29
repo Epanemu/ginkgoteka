@@ -10,12 +10,10 @@ function addPoint() {
 	var newCoords = tmp_marker.getCoords();
 	
     /* check if not too close */
-    // TODO: udelat pres layer a getmarkers... nemusim pak pridavat do ginkgos, nemusim si je mozna ani pamatovat
 	var too_close = false;
 
-	ginkgos.forEach((d, i) => {
-		var coords_str = d.coords.split(" ")
-		var coords = SMap.Coords.fromWGS84(coords_str[0], coords_str[1]);
+	layer.getMarkers().forEach((marker, i) => {
+		var coords = marker.getCoords()
 		if (coords.distance(newCoords) < 20) {
 			alert("Není možné přidat ginkgo tak blízko k jinému!");
 			too_close = true;
@@ -108,6 +106,5 @@ function showImage(input) {
 	
 			reader.readAsDataURL(input.files[0]);
 		}
-		
     }
 }
