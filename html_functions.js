@@ -131,7 +131,9 @@ function removeGinkgo(id) {
 				console.log(response);
 				if (response.startsWith("Error")) {
 					alert("Nastala chyba při mazání z databáze. Zkuste to znovu.")
-					return;
+				} else {
+					m.removeCard();
+					layer.removeMarker(marker_dict[id]);
 				}
 			},
 			error: (jqXHR, textStatus, errorThrown) => {

@@ -40,6 +40,8 @@ const run = () => {
 		.then(result => {console.log(result);loadMap(result)});})
 };	
 
+var marker_dict = {};
+
 function loadMap(data) {
 	var markers = [];
 	var k = 0;
@@ -56,6 +58,7 @@ function loadMap(data) {
 		coords = SMap.Coords.fromWGS84(coords_str[0], coords_str[1]);
 
 		markers.push(new SMap.Marker(coords, null, {url:g_marker}));
+		marker_dict[d.id] = markers[k];
 		markers[k].decorate(SMap.Marker.Feature.Card, c);
 		k++;
 	});
@@ -89,7 +92,6 @@ function addingPoint(coords) {
 	g_marker.appendChild(g_image);
     tmp_marker = new SMap.Marker(coords, null, {url:g_marker});
 
-    //tmp_marker.decorate(SMap.Marker.Feature.Card, c);
 	tmp_marker.decorate(SMap.Marker.Feature.Draggable);
 
 	m.getSignals().addListener(tmp_marker, "marker-drag-stop", () => {
