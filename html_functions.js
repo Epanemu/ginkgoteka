@@ -42,29 +42,36 @@ function addPoint() {
 			contentType: false,
 			processData: false,
 			success: function(dataString) {
-				data = JSON.parse(dataString);
-				console.log(data)
+				try {
+					data = JSON.parse(dataString);
 
-                JAK.gel("add_point_author").value = "";
-                JAK.gel("name_input").value = "";
-				JAK.gel("img_picker").value = "";
-				JAK.gel("add_point_image_preview").style.display = "none";
+					JAK.gel("add_point_author").value = "";
+					JAK.gel("name_input").value = "";
+					JAK.gel("img_picker").value = "";
+					JAK.gel("add_point_image_preview").style.display = "none";
 
-				var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
-				var g_marker = JAK.mel("div");
-				var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
-				g_marker.appendChild(g_image);
-		
-				new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
-				new_marker.decorate(SMap.Marker.Feature.Card, c);
-				layer.addMarker(new_marker);
-				smaller_clusters();
-		
-				tmp_layer.removeAll();
-				tmp_layer.clear();
+					var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
+					var g_marker = JAK.mel("div");
+					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
+					g_marker.appendChild(g_image);
+			
+					new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
+					new_marker.decorate(SMap.Marker.Feature.Card, c);
+					layer.addMarker(new_marker);
+					smaller_clusters();
+			
+					tmp_layer.removeAll();
+					tmp_layer.clear();
+				} catch (e) {
+					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
+					JAK.gel("add_point_form_container").style.visibility = "visible";
+					adding = true;
+				}
 			},
 			error: (jqXHR, textStatus, errorThrown) => {
-				alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
+				alert("Nastala chyba při ukládání do databáze. Zkuste to znovu.");
+				JAK.gel("add_point_form_container").style.visibility = "visible";
+				adding = true;
 				console.error(textStatus+": "+errorThrown);
 			}
 		});
