@@ -108,3 +108,29 @@ function showImage(input) {
 		}
     }
 }
+
+function removeGinkgo(id) {
+	if (confirm("Opravdu chcete odstranit toto Ginkgo?")) {
+		data = new FormData();
+		data.append("id", id);
+		$.ajax({
+			type: "POST",
+			url: "removeGinkgo.php",
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: response => {
+				console.log(response);
+				if (response.startsWith("Error")) {
+					alert("Nastala chyba při mazání z databáze. Zkuste to znovu.")
+					return;
+				}
+			},
+			error: (jqXHR, textStatus, errorThrown) => {
+				alert("Nastala chyba při mazání z databáze. Zkuste to znovu."); 
+				console.error(textStatus+": "+errorThrown);
+			}
+		});
+	}
+}
