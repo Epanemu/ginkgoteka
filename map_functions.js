@@ -35,11 +35,11 @@ m.getSignals().addListener(window, "zoom-stop", smaller_clusters);
 
 var ginkgos;	/* container for all data that is received from the server */
 
-/* adding markers */
+// reading ginkgos
 const run = () => {
-	fetch('http://data.nemecekjiri.cz/api.php/records/ginkgo_dtb/?filter=active,eq,1')
-		.then(response => response.json())
-		.then(result => loadMap(result.records));
+	fetch('readGinkgos.php')
+		.then(response => {console.log(response);response.json()
+		.then(result => {console.log(result);loadMap(result)});})
 };	
 
 function loadMap(data) {

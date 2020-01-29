@@ -32,26 +32,20 @@ function addPoint() {
 		var address = JAK.gel("add_point_address").innerHTML;
 		var coords_str = newCoords.toWGS84(2).join(" ");
 
-
-		var c = new SMap.Card();
-		c.getHeader().innerHTML = "<b>"+name+"</b>";
-		c.getFooter().innerHTML = '<div style="display:flex"><p style="font-size:0.9em;flex-basis:50%;margin:0.5em 1em 0 0;">'+address+'</p><p style="font-size:0.9em;margin:0.5em 1em 0 0;">Přidal: '+(author===null?"Anonym":author)+"<br>("+date_str+")</p></div>";
-		c.getBody().style.margin = "0px";
-		c.getBody().innerHTML = 'Obrázek se nepodařilo načíst';
-
         var data_to_send = new FormData($('#add_point_form')[0]);
         data_to_send.append("coords", coords_str);
         data_to_send.append("address", address);
 
 		$.ajax({
 			type: "POST",
-			url: "addImage.php",
+			url: "addGinkgo.php",
 			data: data_to_send,
 			cache:false,
 			contentType: false,
 			processData: false,
 			success: function(dataString) {
 				data = JSON.parse(dataString);
+				console.log(data)
 
                 JAK.gel("add_point_author").value = "";
                 JAK.gel("name_input").value = "";
