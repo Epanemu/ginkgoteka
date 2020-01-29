@@ -30,10 +30,12 @@
             $data["name"], $data["author"], $data["coords"], $data["address"], $data["img_path"], $data["date_added"], $data["ip_address"]);
         
         mysqli_stmt_execute($stmt);
-        if (mysqli_stmt_affected_rows($stmt))
+        if (mysqli_stmt_affected_rows($stmt)) {
+            $data['id'] = mysqli_insert_id($db);
             echo json_encode($data, JSON_PRETTY_PRINT);
-        else
+        } else {
             echo 'Error saving into database.';
+        }
 
         mysqli_close($db);
     }

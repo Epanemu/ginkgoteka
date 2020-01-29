@@ -49,19 +49,8 @@ function loadMap(data) {
 	ginkgos = data;
 
 	data.forEach((d, i) => {
-		date_added = new Date(d.date_added);
-		date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
-
-		let author = "Anonym"
-		if (d.author !== null)
-			author = unescape(d.author);
-
-
-		var c = new SMap.Card();
-		c.getHeader().innerHTML = '<p class="ginkgo_card_name"><b>'+unescape(d.name)+'</b></p><img class="ginkgo_card_remove" onClick="remove" src=images/remove.png /><img class="ginkgo_card_edit" src=images/edit.png />';
-		c.getFooter().innerHTML = '<div class="ginkgo_card"><p class="ginkgo_card_address">'+d.address+'</p><p>Přidal: '+author+"<br>("+date_str+")</p></div>";
-		c.getBody().style.margin = "0px";
-		c.getBody().innerHTML = '<img src="'+d.img_path+'" class="ginkgo_card_img">';
+		console.log(d);
+		var c = createCard(d.name, d.address, d.author, d.date_added, d.img_path, d.id);
 
 		var g_marker = JAK.mel("div");
 		var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
