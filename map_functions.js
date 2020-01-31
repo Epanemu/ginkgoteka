@@ -3,7 +3,7 @@ var center = SMap.Coords.fromWGS84(14.4716, 48.9755);
 var m = new SMap(JAK.gel("map"), center, 13);
 m.addDefaultLayer(SMap.DEF_BASE).enable();
 
-var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM); /* mouse control */
+var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM);
 m.addControl(mouse);
 
 var layer = new SMap.Layer.Marker();
@@ -78,7 +78,7 @@ var tmp_layer;
 
 function addingPoint(coords) {
 	if (adding || editing)
-		return null;
+		return false;
 	adding = true;
 
     tmp_layer = new SMap.Layer.Marker(); /* Vrstva pro značku */
@@ -108,8 +108,10 @@ function addingPoint(coords) {
 }
 
 function addInTheMiddle() {
-	var coords = m.getCenter()
-	addingPoint(coords);
+	var coords = m.getCenter();
+	if (addingPoint(coords) === false) {
+		alert("Nejprve dokončete současné úpravy.")
+	}
 }
 
 var click =
@@ -119,30 +121,3 @@ m.getSignals().addListener(window, "map-contextmenu",
 		var coords = SMap.Coords.fromEvent(event, m);
 		addingPoint(coords);
 	});
-
-
-
-/*
-function click2(e, elm) {
-    var coords = SMap.Coords.fromEvent(e.data.event, m);
-    alert(coords.toWGS84(2).reverse().join(" "))
-}
-m.getSignals().addListener(window, "map-click", click2);
-
-
-var click = function(signal) {
-    var event = signal.data.event;
-    var coords = SMap.Coords.fromEvent(event, m);
-    new SMap.Geocoder.Reverse(coords, geocoder => alert(geocoder.getResults().label));
-}
-var odpoved = function(geocoder) {
-    var results = geocoder.getResults();
-    var address = results.label;
-    c.getFooter().innerHTML = address;
-}
-
-var signals = m.getSignals();
-signals.addListener(window, "map-click", click);
-
-
-*/
