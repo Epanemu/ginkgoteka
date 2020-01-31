@@ -1,4 +1,6 @@
 <?php
+    define("IMAGE_SAVED_WIDTH", 280);
+
     function resize_image_width($file, $ext, $w) {
         list($width, $height) = getimagesize($file);
         $newheight = ($w/$width) * $height;
@@ -40,64 +42,79 @@
         mysqli_close($db);
     }
 
-    $image = $_POST['pic'];
+    function saveImage() {
+        $image = $_POST['pic'];
 
-    $ext = "";
-    switch ($_FILES['pic']['type']) {
-        case "image/png":
-            $ext = ".png";
-        break;
-        case "image/jpeg":
-            $ext = ".jpg";
-        break;
-        default:
-            $ext = "";
-    }
-
-    if($ext != "") {
-        $imagePath = "./ginkgo_img/";
-        if (!file_exists($imagePath)) {
-            mkdir($imagePath);
+        $ext = "";
+        switch ($_FILES['pic']['type']) {
+            case "image/png":
+                $ext = ".png";
+            break;
+            case "image/jpeg":
+                $ext = ".jpg";
+            break;
+            default:
+                $ext = "";
         }
 
-        // Filename is current timestamp
-        $imagename = time();
-        // and a number in case of collision
-        $special = 0;
-        while (file_exists($imagePath.$imagename.$special.".jpg")) {
-            $special += 1;
-        }
+        if($ext != "") {
+            $imagePath = "./ginkgo_img/";
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath);
+            }
 
-        $imagetemp = $_FILES['pic']['tmp_name'];
+            // Filename is current timestamp
+            $imagename = time();
+            // and a number in case of collision
+            $special = 0;
+            while (file_exists($imagePath.$imagename.$special.".jpg")) {
+                $special += 1;
+            }
 
-        if(is_uploaded_file($imagetemp)) {
-            if(move_uploaded_file($imagetemp, $imagePath."tmp".$ext)) {
-                $resized = resize_image_width($imagePath."tmp".$ext, $ext, 280);
-                // save to a file
-                imagejpeg($resized, $imagePath.$imagename.$special.".jpg");
-                imagedestroy($resized);
-                                
-                $data = [
-                    "name" => $_POST["name"],
-                    "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],
-                    "coords" => $_POST["coords"],
-                    "address" => $_POST["address"],
-                    "img_path" => $imagePath.$imagename.$special.".jpg",
-                    "date_added" => date("Y-m-d H:i:s"),
-                    "ip_address" => $_SERVER['REMOTE_ADDR'],
-                ];
+            $imagetemp = $_FILES['pic']['tmp_name'];
 
-                // on success returns json of these data
-                addToDatabase($data);
+            if(is_uploaded_file($imagetemp)) {
+                if(move_uploaded_file($imagetemp, $imagePath."tmp".$ext)) {
+                    $resized = resize_image_width($imagePath."tmp".$ext, $ext, IMAGE_SAVED_WIDTH);
+                    // save to a file
+                    imagejpeg($resized, $imagePath.$imagename.$special.".jpg");
+                    imagedestroy($resized);
+                                    
+                    return $imagePath.$imagename.$special.".jpg";
+                }
+                else {
+                    echo "Error: Failed to move your image. ";
+                }
             }
             else {
-                echo "Error: Failed to move your image. ";
+                echo "Error: Failed to upload your image.";
             }
+        } else {
+            echo "Error: Unsupported filetype";
         }
-        else {
-            echo "Error: Failed to upload your image.";
-        }
+        return "";
+    }
+
+    $img_path = ""; 
+    if (isset($_POST['img_path'])) {
+        $img_path = $_POST['img_path'];
     } else {
-        echo "Error: Unsupported filetype";
+        $img_path = saveImage();
+    }
+
+    if ($img_path != "") {
+        $data = [
+            "name" => $_POST["name"],
+            "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],
+            "coords" => $_POST["coords"],
+            "address" => $_POST["address"],
+            "img_path" => $img_path,
+            "date_added" => date("Y-m-d H:i:s", isset($_POST["timestamp"]) ? $_POST["timestamp"] : time()),
+            // Potential #adds/ip/hour check to protect from spam...
+            //"ip_address" => $_SERVER['REMOTE_ADDR'],
+        ];
+
+        // on success returns (echoes) json of these data
+        addToDatabase($data);
     }
 ?>

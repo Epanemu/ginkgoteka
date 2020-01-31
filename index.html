@@ -14,22 +14,42 @@
 	<body style="margin: 0">
 		<div id="container" style="width: 100%;height: 100vh;">
 			<div id="map"></div>
-			<div id="add_point_form_container">
-				<form id="add_point_form" action="javascript:addPoint();" method="POST" enctype=multipart/form-data id="adder">
-					<input type="text" name="name" id="name_input" placeholder="Název" required/>
+			<div id="add_point_form_container" class="form_container">
+				<form id="add_point_form" class="point_form" action="javascript:addPoint();" method="POST" enctype=multipart/form-data id="adder">
+					<input type="text" name="name" class="name_input" id="add_point_name_input" placeholder="Název" required/>
 
 					<p>Obrázek Ginkga:</p>
-					<input type="file" name="pic" id="img_picker" accept="image/png,image/jpeg" onchange="showImage(this);" required/><br>
-					<p id="incorrect_image_type"></p>
-					<img id="add_point_image_preview" />
+					<input type="file" name="pic" id="add_point_img_picker" accept="image/png,image/jpeg" onchange="showImage(this);" required/><br>
+					<p id="add_point_incorrect_image_type" class="incorrect_image_type"><b>Tento typ není podporován, prosím vyberte obrázek ve formátu JPG nebo PNG.</b></p>
+					<img id="add_point_image_preview" class="image_preview" />
 					<div id="add_point_footer">
-						<input type="text" name="author" placeholder="Nálezce" id="add_point_author"  size="10" >
-						<p id="add_point_address"></p>
+						<input type="text" name="author" placeholder="Nálezce" id="add_point_author" class="short_input" size="10" >
+						<p id="add_point_address" class="address_field"></p>
 					</div>
-					<!--<button id="accept_btn" onclick="addPoint()">Přidat Ginkgo</button>-->
-					<div id="add_point_buttons">
+					<div class="confirmation_buttons">
 						<input id="add_point_submit_btn" class="button_submit" type="submit" value="Přidat Ginkgo">
-						<button id="add_point_cancel_btn" class="button_cancel" id="remove_btn" onclick="discardPoint();">Zrušit</button>
+						<button id="add_point_cancel_btn" class="button_cancel" onclick="discardPoint();">Zrušit</button>
+					</div>
+				</form>
+			</div>
+			<div id="edit_point_form_container" class="form_container">
+				<form id="edit_point_form" class="point_form" action="javascript:editPoint();" method="POST" enctype=multipart/form-data id="editor">
+					<input type="text" name="name" class="name_input" id="edit_point_name_input"/>
+
+					<p>Obrázek Ginkga:</p>
+					<input type="file" name="pic"  id="edit_point_img_picker" accept="image/png,image/jpeg" onchange="showImage(this);" /><br>
+					<p id="edit_point_incorrect_image_type" class="incorrect_image_type"><b>Tento typ není podporován, prosím vyberte obrázek ve formátu JPG nebo PNG.</b></p>
+					<img id="edit_point_image_preview" class="image_preview"/>
+					<div id="edit_point_footer">
+						<div  class="short_input">
+							<input type="text" name="author" id="edit_point_author" size="10" >
+							<input type="text" name="date" id="edit_point_date" size="10" >
+						</div>
+						<p id="edit_point_address" class="address_field"></p>
+					</div>
+					<div class="confirmation_buttons">
+						<input id="edit_point_submit_btn" class="button_submit" type="submit" value="Uložit">
+						<button id="edit_point_cancel_btn" class="button_cancel" onclick="discardPoint();">Zrušit</button>
 					</div>
 				</form>
 			</div>

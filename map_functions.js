@@ -72,11 +72,12 @@ function loadMap(data) {
 run();
 
 var adding = false;
+var editing = false;
 var tmp_marker;
 var tmp_layer;
 
 function addingPoint(coords) {
-	if (adding)
+	if (adding || editing)
 		return null;
 	adding = true;
 
