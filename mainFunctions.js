@@ -91,37 +91,45 @@ m.getSignals().addListener(window, "map-contextmenu",
 		addingPoint(coords);
 	});
 
+function handleForm(event) { event.preventDefault(); } 
+
+var add_point_form = document.getElementById("add_point_form");
+add_point_form.addEventListener('submit', handleForm);
+var edit_point_form = document.getElementById("edit_point_form");
+edit_point_form.addEventListener('submit', handleForm);
+
 function discardPoint() {
-	if (adding && confirm("Opravdu chcete zrušit provedené úpravy?")) {
-		adding = false;
-		JAK.gel("add_point_form_container").style.visibility = "hidden";
-		tmp_layer.removeAll();
-		tmp_layer.clear();
-
-		JAK.gel("add_point_name_input").value = "";
-		JAK.gel("add_point_author").value = "";
-		JAK.gel("add_point_img_picker").value = "";
-		JAK.gel("add_point_image_preview").style.display = "none";
-		JAK.gel("add_point_incorrect_image_type").style.display = "none";
-	}
-	if (editing && confirm("Opravdu chcete zrušit provedené úpravy?")) {
-		editing = false;
-		JAK.gel("edit_point_form_container").style.visibility = "hidden";
-		tmp_layer.removeAll();
-		tmp_layer.clear();
-
-		layer.addMarker(oldMarker);
-		smaller_clusters();
-
-		JAK.gel("edit_point_name_input").value = "";
-		JAK.gel("edit_point_name_input").placeholder = "";
-		JAK.gel("edit_point_author").value = "";
-		JAK.gel("edit_point_author").placeholder = "";
-		JAK.gel("edit_point_date").value = "";
-		JAK.gel("edit_point_date").placeholder = "";
-		JAK.gel("edit_point_img_picker").value = "";
-		JAK.gel("edit_point_image_preview").style.display = "none";
-		JAK.gel("edit_point_incorrect_image_type").style.display = "none";
+	if (confirm("Opravdu chcete zrušit provedené úpravy?")) {
+		if (adding) {
+			adding = false;
+			JAK.gel("add_point_form_container").style.visibility = "hidden";
+			tmp_layer.removeAll();
+			tmp_layer.clear();
+	
+			JAK.gel("add_point_name_input").value = "";
+			JAK.gel("add_point_author").value = "";
+			JAK.gel("add_point_img_picker").value = "";
+			JAK.gel("add_point_image_preview").style.display = "none";
+			JAK.gel("add_point_incorrect_image_type").style.display = "none";
+		} else if (editing) {
+			editing = false;
+			JAK.gel("edit_point_form_container").style.visibility = "hidden";
+			tmp_layer.removeAll();
+			tmp_layer.clear();
+	
+			layer.addMarker(oldMarker);
+			smaller_clusters();
+	
+			JAK.gel("edit_point_name_input").value = "";
+			JAK.gel("edit_point_name_input").placeholder = "";
+			JAK.gel("edit_point_author").value = "";
+			JAK.gel("edit_point_author").placeholder = "";
+			JAK.gel("edit_point_date").value = "";
+			JAK.gel("edit_point_date").placeholder = "";
+			JAK.gel("edit_point_img_picker").value = "";
+			JAK.gel("edit_point_image_preview").style.display = "none";
+			JAK.gel("edit_point_incorrect_image_type").style.display = "none";
+		}
 	}
 }
 
@@ -174,12 +182,12 @@ function _removeGinkgo(id) {
 		contentType: false,
 		processData: false,
 		success: response => {
-			console.log(response);
 			if (response.startsWith("Error")) {
 				alert("Nastala chyba při mazání z databáze. Zkuste to znovu.")
 			} else {
 				m.removeCard();
 				layer.removeMarker(marker_dict[id]);
+				smaller_clusters();
 			}
 		},
 		error: (jqXHR, textStatus, errorThrown) => {

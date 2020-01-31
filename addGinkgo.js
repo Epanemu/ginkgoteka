@@ -100,6 +100,8 @@ function addPoint() {
 			
 					tmp_layer.removeAll();
 					tmp_layer.clear();
+
+					marker_dict[data.id] = new_marker;
 				} catch (e) {
 					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
 					JAK.gel("add_point_form_container").style.visibility = "visible";

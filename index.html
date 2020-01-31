@@ -15,7 +15,7 @@
 		<div id="container" style="width: 100%;height: 100vh;">
 			<div id="map"></div>
 			<div id="add_point_form_container" class="form_container">
-				<form id="add_point_form" class="point_form" action="javascript:addPoint();" method="POST" enctype=multipart/form-data id="adder">
+				<form id="add_point_form" class="point_form" action="#" method="POST" enctype=multipart/form-data id="adder">
 					<input type="text" name="name" class="name_input" id="add_point_name_input" placeholder="Název" required/>
 
 					<p>Obrázek Ginkga:</p>
@@ -27,13 +27,14 @@
 						<p id="add_point_address" class="address_field"></p>
 					</div>
 					<div class="confirmation_buttons">
-						<input id="add_point_submit_btn" class="button_submit" type="submit" value="Přidat Ginkgo">
+						<!-- <input id="add_point_submit_btn" class="button_submit" type="submit" value="Přidat Ginkgo"> -->
+						<button id="add_point_submit_btn" class="button_submit" onclick="addPoint();">Přidat Ginkgo</button>
 						<button id="add_point_cancel_btn" class="button_cancel" onclick="discardPoint();">Zrušit</button>
 					</div>
 				</form>
 			</div>
 			<div id="edit_point_form_container" class="form_container">
-				<form id="edit_point_form" class="point_form" action="javascript:editPoint();" method="POST" enctype=multipart/form-data id="editor">
+				<form id="edit_point_form" class="point_form" action="#" method="POST" enctype=multipart/form-data id="editor">
 					<input type="text" name="name" class="name_input" id="edit_point_name_input"/>
 
 					<p>Obrázek Ginkga:</p>
@@ -48,7 +49,8 @@
 						<p id="edit_point_address" class="address_field"></p>
 					</div>
 					<div class="confirmation_buttons">
-						<input id="edit_point_submit_btn" class="button_submit" type="submit" value="Uložit">
+						<!-- <input id="edit_point_submit_btn" class="button_submit" type="submit" onclick="editPoint()" value="Uložit"> -->
+						<button id="edit_point_submit_btn" class="button_submit" onclick="editPoint();">Uložit</button>
 						<button id="edit_point_cancel_btn" class="button_cancel" onclick="discardPoint();">Zrušit</button>
 					</div>
 				</form>
@@ -59,7 +61,8 @@
 			<img src="images/add_btn.png" id="add_btn" onclick="addInTheMiddle();">
 		</div>
 		<script src="./mapCard.js"></script>
-		<script src="./map_functions.js"></script>
-		<script src="./html_functions.js"></script>
+		<script src="./mainFunctions.js"></script>
+		<script src="./addGinkgo.js"></script>
+		<script src="./editGinkgo.js"></script>
 	</body>
 </html>

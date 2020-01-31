@@ -64,7 +64,7 @@ function editingGinkgo(id) {
 function editPoint() {
 	if (!editing) {
 		return;
-	}
+    }
 
 	if (JAK.gel("edit_point_img_picker").files.length > 0) {
 		const fileType = JAK.gel("edit_point_img_picker").files[0]['type'];
@@ -140,20 +140,22 @@ function editPoint() {
 					JAK.gel("edit_point_image_preview").style.display = "none";
 					JAK.gel("edit_point_incorrect_image_type").style.display = "none";
 
-					var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
+                    var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
 					var g_marker = JAK.mel("div");
 					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
 					g_marker.appendChild(g_image);
 			
 					new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
 					new_marker.decorate(SMap.Marker.Feature.Card, c);
+                    
+                    marker_dict[data.id] = new_marker;
+                    
 					layer.addMarker(new_marker);
 					smaller_clusters();
-			
 					tmp_layer.removeAll();
 					tmp_layer.clear();
-
-					_removeGinkgo(editingId);
+                    
+                    _removeGinkgo(editingId);
 				} catch (e) {
 					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
 					console.error(dataString)
