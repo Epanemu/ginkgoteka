@@ -98,7 +98,7 @@ var edit_point_form = document.getElementById("edit_point_form");
 edit_point_form.addEventListener('submit', handleForm);
 
 function discardPoint() {
-	if (confirm("Opravdu chcete zrušit provedené úpravy?")) {
+	if (confirm("Opravdu chcete zrušit prováděné úpravy?")) {
 		if (adding) {
 			adding = false;
 			JAK.gel("add_point_form_container").style.visibility = "hidden";
@@ -195,3 +195,29 @@ function _removeGinkgo(id) {
 		}
 	});
 }
+
+$.fn.restrictInputs = function(restrictPattern){
+    var targets = $(this);
+
+    // The characters inside this pattern are accepted
+    // and everything else will be 'cleaned'
+    // For example 'ABCdEfGhI5' become 'ABCEGI5'
+    var pattern = restrictPattern ||
+        /[^0-9A-Za-z !#$%()*+,\-\/.:=?@\[\]^_{|}]*/g; // default pattern
+
+    var restrictHandler = function(){
+        var val = $(this).val();
+        var newVal = val.replace(pattern, '');
+
+        // This condition is to prevent selection and keyboard navigation issues
+        if (val !== newVal) {
+            $(this).val(newVal);
+        }
+    };
+
+    targets.on('keyup', restrictHandler);
+    targets.on('paste', restrictHandler);
+    targets.on('change', restrictHandler);
+};
+
+$('input').restrictInputs();
