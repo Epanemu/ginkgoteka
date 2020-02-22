@@ -1,6 +1,16 @@
 // pre-defined center in Česke Budějovice
 var center = SMap.Coords.fromWGS84(14.4716, 48.9755);
 var m = new SMap(JAK.gel("map"), center, 13);
+// try to set a location
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(
+		pos => {
+			center = SMap.Coords.fromWGS84(pos.coords.longitude, pos.coords.latitude);
+			m.setCenter(center);
+		},
+		error => {console.error(error)},
+		{enableHighAccuracy: true});
+}
 m.addDefaultLayer(SMap.DEF_BASE).enable();
 
 var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM);
