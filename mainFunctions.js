@@ -1,5 +1,5 @@
 // pre-defined center in Česke Budějovice
-var center = SMap.Coords.fromWGS84(14.4716, 48.9755); 
+var center = SMap.Coords.fromWGS84(14.4716, 48.9755);
 var m = new SMap(JAK.gel("map"), center, 13);
 m.addDefaultLayer(SMap.DEF_BASE).enable();
 
@@ -36,9 +36,9 @@ m.getSignals().addListener(window, "zoom-stop", smaller_clusters);
 // reading ginkgos
 const run = () => {
 	fetch('readGinkgos.php')
-		.then(response => {console.log(response);response.json()
-		.then(result => {console.log(result);loadMap(result)});})
-};	
+		.then(response => {response.json()
+		.then(result => {loadMap(result)});})
+};
 
 var marker_dict = {};
 
@@ -47,7 +47,6 @@ function loadMap(data) {
 	var k = 0;
 
 	data.forEach((d, i) => {
-		console.log(d);
 		var c = createCard(d.name, d.address, d.author, d.date_added, d.img_path, d.id);
 
 		var g_marker = JAK.mel("div");
@@ -91,7 +90,7 @@ m.getSignals().addListener(window, "map-contextmenu",
 		addingPoint(coords);
 	});
 
-function handleForm(event) { event.preventDefault(); } 
+function handleForm(event) { event.preventDefault(); }
 
 var add_point_form = document.getElementById("add_point_form");
 add_point_form.addEventListener('submit', handleForm);
@@ -105,7 +104,7 @@ function discardPoint() {
 			JAK.gel("add_point_form_container").style.visibility = "hidden";
 			tmp_layer.removeAll();
 			tmp_layer.clear();
-	
+
 			JAK.gel("add_point_name_input").value = "";
 			JAK.gel("add_point_author").value = "";
 			JAK.gel("add_point_img_picker").value = "";
@@ -116,10 +115,10 @@ function discardPoint() {
 			JAK.gel("edit_point_form_container").style.visibility = "hidden";
 			tmp_layer.removeAll();
 			tmp_layer.clear();
-	
+
 			layer.addMarker(oldMarker);
 			smaller_clusters();
-	
+
 			JAK.gel("edit_point_name_input").value = "";
 			JAK.gel("edit_point_name_input").placeholder = "";
 			JAK.gel("edit_point_author").value = "";
@@ -136,7 +135,7 @@ function discardPoint() {
 function showImage(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
-		
+
 		const fileType = input.files[0]['type'];
 		const validImageTypes = ['image/jpeg', 'image/png'];
 		if (!validImageTypes.includes(fileType)) {
@@ -191,7 +190,7 @@ function _removeGinkgo(id) {
 			}
 		},
 		error: (jqXHR, textStatus, errorThrown) => {
-			alert("Nastala chyba při mazání z databáze. Zkuste to znovu."); 
+			alert("Nastala chyba při mazání z databáze. Zkuste to znovu.");
 			console.error(textStatus+": "+errorThrown);
 		}
 	});

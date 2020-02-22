@@ -16,16 +16,22 @@ function editingGinkgo(id) {
 	// header -> paragraph -> bold -> innerHTML
 	oldName = c.getHeader().children[0].children[0].innerHTML
 
-	oldImgPath = c.getBody().children[0].src
-	
+	if (c.getBody().children.length !== 0)
+		oldImgPath = c.getBody().children[0].src
+	else
+		oldImgPath = ""
+
 	f = c.getFooter().children[0];
 	oldAddress = f.children[0].innerHTML;
 	p = f.children[1].innerHTML;
 	oldAuthor = p.substring(8, p.indexOf("<br>"));
 	oldDate = p.substring(p.indexOf("<br>(")+5, p.lastIndexOf(")"));
-	
+
 	JAK.gel('edit_point_image_preview').src = oldImgPath;
-	JAK.gel('edit_point_image_preview').style.display = "block";
+	if (oldImgPath === "")
+		JAK.gel('edit_point_image_preview').style.display = "none";
+	else
+		JAK.gel('edit_point_image_preview').style.display = "block";
 	JAK.gel('edit_point_name_input').value = oldName;
 	JAK.gel('edit_point_name_input').placeholder = oldName;
 	JAK.gel('edit_point_address').innerHTML = oldAddress;
@@ -53,7 +59,7 @@ function editingGinkgo(id) {
     tmp_layer.addMarker(tmp_marker);
 
 	JAK.gel("edit_point_form_container").style.visibility = "visible";
-	
+
 	m.removeCard();
 	oldMarker = marker_dict[id];
 	layer.removeMarker(marker_dict[id]);
@@ -77,7 +83,7 @@ function editPoint() {
 	} else {
 		useOldImgPath = true;
 	}
-		
+
 	var newCoords = tmp_marker.getCoords();
 
 	/* check if not too close */
@@ -144,20 +150,20 @@ function editPoint() {
 					var g_marker = JAK.mel("div");
 					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
 					g_marker.appendChild(g_image);
-			
+
 					new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
 					new_marker.decorate(SMap.Marker.Feature.Card, c);
-                    
+
                     marker_dict[data.id] = new_marker;
-                    
+
 					layer.addMarker(new_marker);
 					smaller_clusters();
 					tmp_layer.removeAll();
 					tmp_layer.clear();
-                    
+
                     _removeGinkgo(editingId);
 				} catch (e) {
-					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
+					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu.");
 					console.error(dataString)
 					JAK.gel("edit_point_form_container").style.visibility = "visible";
 					editing = true;

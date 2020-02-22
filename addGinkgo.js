@@ -33,11 +33,23 @@ function addPoint() {
 	if (!adding) {
 		return;
 	}
-	const fileType = JAK.gel("add_point_img_picker").files[0]['type'];
-	const validImageTypes = ['image/jpeg', 'image/png'];
-	if (!validImageTypes.includes(fileType)) {
-		alert("Vyberte obrázek ve formátu png nebo jpeg.")
-		return;
+
+	let form_unfilled_check = false;
+	if (JAK.gel("add_point_img_picker").files.length === 0) {
+		if (JAK.gel("add_point_author").value !== "") {
+			form_unfilled_check = confirm("Přidat do Ginkgotéky bez obrázku?");
+		} else {
+			form_unfilled_check = confirm("Přidat do Ginkgotéky bez obrázku a nálezce?");
+		}
+	} else {
+		const fileType = JAK.gel("add_point_img_picker").files[0]['type'];
+		const validImageTypes = ['image/jpeg', 'image/png'];
+		if (!validImageTypes.includes(fileType)) {
+			alert("Vyberte obrázek ve formátu png nebo jpeg.")
+			return;
+		}
+
+		form_unfilled_check = (JAK.gel("add_point_author").value !== "" || confirm("Přidat do Ginkgotéky bez nálezce?"));
 	}
 
 	JAK.gel("add_point_name_input").value = JAK.gel("add_point_name_input").value.trim();
@@ -45,9 +57,9 @@ function addPoint() {
 		alert("Název nesmí obsahovat pouze mezery");
 		return;
 	}
-	
+
 	var newCoords = tmp_marker.getCoords();
-	
+
     /* check if not too close */
 	var too_close = false;
 
@@ -60,7 +72,7 @@ function addPoint() {
 	});
 
 	JAK.gel("add_point_author").value = JAK.gel("add_point_author").value.trim();
-	if (!too_close && adding && (JAK.gel("add_point_author").value !== "" || confirm("Přidat do Ginkgotéky bez nálezce?"))) {
+	if (!too_close && adding && form_unfilled_check) {
 
 		adding = false;
 		JAK.gel("add_point_form_container").style.visibility = "hidden";
@@ -92,18 +104,18 @@ function addPoint() {
 					var g_marker = JAK.mel("div");
 					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
 					g_marker.appendChild(g_image);
-			
+
 					new_marker = new SMap.Marker(newCoords, null, {url:g_marker});
 					new_marker.decorate(SMap.Marker.Feature.Card, c);
 					layer.addMarker(new_marker);
 					smaller_clusters();
-			
+
 					tmp_layer.removeAll();
 					tmp_layer.clear();
 
 					marker_dict[data.id] = new_marker;
 				} catch (e) {
-					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu."); 
+					alert("Nastala chyba při ukládání do databáze. Zkuste to znovu.");
 					JAK.gel("add_point_form_container").style.visibility = "visible";
 					adding = true;
 				}

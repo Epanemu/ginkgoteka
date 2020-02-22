@@ -22,15 +22,15 @@
 
     function addToDatabase($data) {
         include('config.php');
-        
+
         $db = new mysqli($server, $user, $password, $dtb_name)
         or die('Error connecting to MySQL server.');
 
         $stmt = mysqli_prepare($db,"INSERT INTO ginkgo_dtb (name, author, coords, address, img_path, date_added, ip_address) VALUES (?,?,?,?,?,?,?)");
 
-        mysqli_stmt_bind_param($stmt, "sssssss", 
+        mysqli_stmt_bind_param($stmt, "sssssss",
             $data["name"], $data["author"], $data["coords"], $data["address"], $data["img_path"], $data["date_added"], $data["ip_address"]);
-        
+
         mysqli_stmt_execute($stmt);
         if (mysqli_stmt_affected_rows($stmt)) {
             $data['id'] = mysqli_insert_id($db);
@@ -43,7 +43,9 @@
     }
 
     function saveImage() {
-        $image = $_POST['pic'];
+        if (!isset($_FILES['pic'])) {
+            return "";
+        }
 
         $ext = "";
         switch ($_FILES['pic']['type']) {
@@ -79,7 +81,7 @@
                     // save to a file
                     imagejpeg($resized, $imagePath.$imagename.$special.".jpg");
                     imagedestroy($resized);
-                                    
+
                     return $imagePath.$imagename.$special.".jpg";
                 }
                 else {
@@ -92,17 +94,17 @@
         } else {
             echo "Error: Unsupported filetype";
         }
-        return "";
+        return null;
     }
 
-    $img_path = ""; 
+    $img_path = null;
     if (isset($_POST['img_path'])) {
         $img_path = $_POST['img_path'];
     } else {
         $img_path = saveImage();
     }
 
-    if ($img_path != "") {
+    if ($img_path !== null) {
         $data = [
             "name" => $_POST["name"],
             "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],

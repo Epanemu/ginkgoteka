@@ -1,6 +1,6 @@
 <?php
     include('config.php');
-            
+
     $db = new mysqli($server, $user, $password, $dtb_name)
     or die('Error connecting to MySQL server.');
 
