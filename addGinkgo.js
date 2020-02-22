@@ -30,7 +30,7 @@ function addingPoint(coords) {
 }
 
 function addPoint() {
-	if (!adding) {
+	if (!adding || JAK.gel("add_point_name_input").value == "") {
 		return;
 	}
 
