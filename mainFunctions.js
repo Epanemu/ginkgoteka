@@ -66,7 +66,7 @@ function loadMap(data) {
 	var k = 0;
 
 	data.forEach((d, i) => {
-		var c = createCard(d.name, d.address, d.author, d.date_added, d.img_path, d.id);
+		var c = createCard(d.name, d.address, d.author, d.date_added, d.img_path, d.id, d.img_style);
 
 		var g_marker = JAK.mel("div");
 		var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});

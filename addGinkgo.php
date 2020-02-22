@@ -1,10 +1,15 @@
 <?php
-    define("IMAGE_SAVED_WIDTH", 280);
+    include('definitions.php');
 
     function resize_image_width($file, $ext, $w) {
         list($width, $height) = getimagesize($file);
         $newheight = ($w/$width) * $height;
         $newwidth = $w;
+
+        if ($newheight < IMAGE_SAVED_MIN_HEIGHT) {
+            $newwidth = (IMAGE_SAVED_MIN_HEIGHT/$newheight) * $newwidth;
+            $newheight = IMAGE_SAVED_MIN_HEIGHT;
+        }
 
         if ($ext == ".jpg") {
             $src = imagecreatefromjpeg($file);
@@ -105,12 +110,24 @@
     }
 
     if ($img_path !== null) {
+        if ($img_path != "") {
+            list($width, $height) = getimagesize($img_path);
+            if ($height == IMAGE_SAVED_MIN_HEIGHT) {
+                $img_style = "wide";
+            } else {
+                $img_style = "tall";
+            }
+        } else {
+            $img_style = "";
+        }
+
         $data = [
             "name" => $_POST["name"],
             "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],
             "coords" => $_POST["coords"],
             "address" => $_POST["address"],
             "img_path" => $img_path,
+            "img_style" => $img_style,
             "date_added" => date("Y-m-d H:i:s", isset($_POST["timestamp"]) ? $_POST["timestamp"] : time()),
             // Potential #adds/ip/hour check to protect from spam...
             //"ip_address" => $_SERVER['REMOTE_ADDR'],

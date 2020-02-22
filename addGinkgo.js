@@ -100,7 +100,7 @@ function addPoint() {
 					JAK.gel("add_point_img_picker").value = "";
 					JAK.gel("add_point_image_preview").style.display = "none";
 
-					var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
+					var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id, data.img_style);
 					var g_marker = JAK.mel("div");
 					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
 					g_marker.appendChild(g_image);

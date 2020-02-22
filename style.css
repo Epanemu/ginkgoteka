@@ -23,8 +23,12 @@
 	display: flex;
 }
 
-.ginkgo_card_img {
-	width:100% !important;
+.ginkgo_card_img_wide {
+	height: 100% !important;
+}
+
+.ginkgo_card_img_tall {
+	width: 100% !important;
 }
 
 .ginkgo_card > p {
