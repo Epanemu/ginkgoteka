@@ -66,13 +66,16 @@ function addPoint() {
 	layer.getMarkers().forEach((marker, i) => {
 		var coords = marker.getCoords()
 		if (coords.distance(newCoords) < 20) {
-			alert("Není možné přidat ginkgo tak blízko k jinému!");
 			too_close = true;
 		}
 	});
+	if (too_close) {
+		alert("Není možné přidat ginkgo tak blízko k jinému!");
+		return;
+	}
 
 	JAK.gel("add_point_author").value = JAK.gel("add_point_author").value.trim();
-	if (!too_close && adding && form_unfilled_check) {
+	if (adding && form_unfilled_check) {
 
 		adding = false;
 		JAK.gel("add_point_form_container").style.visibility = "hidden";
