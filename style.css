@@ -3,6 +3,11 @@
 	height: 100%;
 }
 
+/* This makes the first layer gray */
+#map > div:first-child > div:first-child > div:first-child {
+	filter: grayscale(0.8);
+}
+
 #add_btn {
 	position:absolute;
 	top: 16px;
@@ -58,8 +63,8 @@
 
 .form_container {
 	position: absolute;
-	left: 1vw;
-	top: 2vh;
+	left: 8px;
+	top: 8px;
 	padding: 16px 16px 0 16px;
 	border-radius: 8px;
 	box-sizing: border-box;

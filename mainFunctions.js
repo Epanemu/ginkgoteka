@@ -12,6 +12,15 @@ if (navigator.geolocation) {
 		{enableHighAccuracy: true});
 }
 m.addDefaultLayer(SMap.DEF_BASE).enable();
+m.addDefaultLayer(SMap.DEF_OPHOTO);
+m.addDefaultLayer(SMap.DEF_TURIST);
+
+
+var c = new SMap.Control.Layer({title:"Posun mapy", items: 3, page: 3});
+c.addDefaultLayer(SMap.DEF_BASE);
+c.addDefaultLayer(SMap.DEF_OPHOTO);
+c.addDefaultLayer(SMap.DEF_TURIST);
+m.addControl(c, {left:"10px", top:"10px"});
 
 var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM);
 m.addControl(mouse);
