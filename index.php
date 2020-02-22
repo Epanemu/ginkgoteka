@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Ginkgotéka - demo</title>
+		<title>Ginkgotéka - v0.1</title>
 		<meta charset="UTF-8">
 
 		<link rel="icon" href="images/ginkgo-marker.png">
@@ -11,8 +11,8 @@
 		<script src="jquery-3.4.1.min.js"></script>
 		<script>Loader.load()</script>
 	</head>
-	<body style="margin: 0">
-		<div id="container" style="width: 100%;height: 100vh;">
+	<body>
+		<div id="container">
 			<div id="map"></div>
 			<div id="add_point_form_container" class="form_container">
 				<form id="add_point_form" class="point_form" action="#" method="POST" enctype=multipart/form-data id="adder">
