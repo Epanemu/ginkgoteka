@@ -44,7 +44,7 @@ function editingGinkgo(id) {
 	m.addLayer(tmp_layer).enable();
 
 	var g_marker = JAK.mel("div");
-	var g_image = JAK.mel("img", {src:"./images/bw-ginkgo-marker.png"});
+	var g_image = JAK.mel("img", {src:"./images/new-ginkgo-marker.png"});
 	g_marker.appendChild(g_image);
     tmp_marker = new SMap.Marker(oldCoords, null, {url:g_marker});
 

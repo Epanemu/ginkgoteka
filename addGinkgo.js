@@ -11,7 +11,7 @@ function addingPoint(coords) {
     });
 
 	var g_marker = JAK.mel("div");
-	var g_image = JAK.mel("img", {src:"./images/bw-ginkgo-marker.png"});
+	var g_image = JAK.mel("img", {src:"./images/new-ginkgo-marker.png"});
 	g_marker.appendChild(g_image);
     tmp_marker = new SMap.Marker(coords, null, {url:g_marker});
 
