@@ -43,7 +43,7 @@
     }
 
     function saveImage() {
-        if (!isset($_FILES['pic'])) {
+        if (!isset($_FILES['pic']) || $_FILES['pic']['error'] != 0) {
             return "";
         }
 
