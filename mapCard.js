@@ -1,9 +1,9 @@
-function createCard(name, address, author, date, img_path, id, img_style = "wide") {
+function createCardPreview(name, address, author, date, img_path, img_style = "wide") {
     date_added = new Date(date);
     date_str = date_added.getDate().toString() + ". " + (date_added.getMonth()+1).toString() + ". " + date_added.getFullYear().toString();
 
     var c = new SMap.Card();
-    c.getHeader().innerHTML = '<p class="ginkgo_card_name"><b>'+name+'</b></p><img onclick="removeGinkgo('+id+');" class="ginkgo_card_remove" src=images/remove.png /><img onclick="editingGinkgo('+id+');" class="ginkgo_card_edit" src=images/edit.png />';
+    c.getHeader().innerHTML = '<p class="ginkgo_card_name"><b>'+name+'</b></p>';
     c.getFooter().innerHTML = '<div class="ginkgo_card"><p class="ginkgo_card_address">'+address+'</p><p>Přidal: '+author+"<br>("+date_str+")</p></div>";
     c.getBody().style.margin = "0px";
     if (img_path !== "")
@@ -14,4 +14,8 @@ function createCard(name, address, author, date, img_path, id, img_style = "wide
     else
         c.getBody().innerHTML = 'Toto ginkgo nemá žádný obrázek';
     return c;
+}
+
+function createCard(name, address, author, date, img_path, id, img_style = "wide") {
+    return createCardPreview(name, address, author, date, img_path, img_style);
 }
