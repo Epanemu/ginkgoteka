@@ -9,6 +9,6 @@ function createCard(name, address, author, date, img_path, id) {
     if (img_path !== "")
         c.getBody().innerHTML = '<img src="'+img_path+'" class="ginkgo_card_img">';
     else
-        c.getBody().innerHTML = 'Toto ginkgo nemá žádný obrzek';
+        c.getBody().innerHTML = 'Toto ginkgo nemá žádný obrázek';
     return c;
 }
