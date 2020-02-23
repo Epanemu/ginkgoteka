@@ -85,7 +85,7 @@ function loadMap(data) {
 	layer.addMarker(markers);
 	smaller_clusters();
 
-    JAK.gel("spinner").style.visibility = "hidden";
+    JAK.gel("spinner").style.display = "none";
 }
 
 run();
@@ -244,18 +244,14 @@ $.fn.restrictInputs = function(restrictPattern){
 
 $('input').restrictInputs();
 
-help_shown = false;
 $('#help_btn').click(e => {
-	console.log("huh");
 	if ($('#help_window').css("display") === 'none')
 		$('#help_window').css({display:'block'});
 	else
 		$('#help_window').css({display:'none'});
-	help_shown = true;
 });
 
 $('#map').click(e => {
-	help_shown = false;
 	$('#help_window').css({display:'none'});
 
 	$("#edit_point_author").blur();

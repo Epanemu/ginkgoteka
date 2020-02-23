@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	overflow-y: hidden;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #container {
@@ -228,7 +229,7 @@ body {
 	top: 30vh;
 	left: 25vw;
 	width: 50vw;
-	background-color: #0e0e0ec8;
+	background-color: #0e0e0ecc;
 	color: white;
 	font-family: Arial, Helvetica, sans-serif;
 	display: none;
