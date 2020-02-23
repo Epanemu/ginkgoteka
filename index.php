@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <?php
 	$logged = isset($_SESSION['loginID']);
+	$version = 'v1.0';
 ?>
 <html>
 	<head>
-		<title>Ginkgotéka - v0.1</title>
+		<title>Ginkgotéka -  <?php echo $version?></title>
 		<meta charset="UTF-8">
 
 		<link rel="icon" href="images/ginkgo-marker.png">
@@ -78,7 +79,7 @@
 					else
 						echo '<p>Jste v <b>prohlížecím módu</b>.</p><p>Pro zobrazení více inforamcí klikněte na jednotlivé ikony ginkga.<br/>Pokud chcete přidávat, upravovat a nebo odebírat Ginkga, musíte se přihlásit tak jako když jdete do <a href="https://dvacitka.skauting.cz/vedeni.php">sekce vedení</a>.</p>';
 				?>
-				<p id="version_notice">Ginkotéka v0.1</p>
+				<p id="version_notice">Ginkotéka <?php echo $version?></p>
 			</div>
 		</div>
 		<?php
