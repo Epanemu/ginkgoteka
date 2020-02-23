@@ -10,6 +10,7 @@
 
 		<link rel="icon" href="images/ginkgo-marker.png">
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
 		<script src="https://api.mapy.cz/loader.js"></script>
 		<script src="jquery-3.4.1.min.js"></script>
