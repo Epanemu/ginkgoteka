@@ -1,7 +1,9 @@
 <?php
-    include("config.php");
+    // include("config.php");
+    $root_path = $_SERVER['DOCUMENT_ROOT'];
+    include $root_path . '/config/config.php';
 
-    $db = new mysqli($server, $user, $password, $dtb_name)
+    $db = new mysqli($servername, $username, $password, $dbname)
     or die('Error connecting to MySQL server.');
 
     $stmt = mysqli_prepare($db,"UPDATE ginkgo_dtb SET active=0 WHERE id=(?);");

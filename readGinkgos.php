@@ -1,8 +1,10 @@
 <?php
     include('definitions.php');
-    include('config.php');
+    // include('config.php');
+    $root_path = $_SERVER['DOCUMENT_ROOT'];
+    include $root_path . '/config/config.php';
 
-    $db = new mysqli($server, $user, $password, $dtb_name)
+    $db = new mysqli($servername, $username, $password, $dbname)
     or die('Error connecting to MySQL server.');
 
     $query = "SELECT * FROM ginkgo_dtb WHERE active=1";

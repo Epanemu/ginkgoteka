@@ -26,9 +26,11 @@
     }
 
     function addToDatabase($data) {
-        include('config.php');
+        // include('config.php');
+        $root_path = $_SERVER['DOCUMENT_ROOT'];
+        include $root_path . '/config/config.php';
 
-        $db = new mysqli($server, $user, $password, $dtb_name)
+        $db = new mysqli($servername, $username, $password, $dbname)
         or die('Error connecting to MySQL server.');
 
         $stmt = mysqli_prepare($db,"INSERT INTO ginkgo_dtb (name, author, coords, address, img_path, date_added, ip_address) VALUES (?,?,?,?,?,?,?)");
