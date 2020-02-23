@@ -84,7 +84,7 @@
 		<?php
 			if ($logged)
 				echo '<script src="./mapCard.js"></script>
-				      <script src="./mapCardNoEdit.js"></script>';
+				      <script src="./mapCardWithEdit.js"></script>';
 			else
 				echo '<script src="./mapCard.js"></script>';
 		?>
