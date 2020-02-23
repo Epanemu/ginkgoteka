@@ -205,3 +205,43 @@ body {
     from { transform:rotate(0deg); }
     to { transform:rotate(360deg); }
 }
+
+/*  ----------  HELP  ------------  */
+
+#help_btn {
+	position: absolute;
+	left: 10px;
+	bottom: 14px;
+	z-index: 1;
+	width: 2em;
+	max-height: 8vmax;
+	max-width: 8vmax;
+}
+
+#help_window {
+	z-index: 2;
+	position: absolute;
+	top: 30vh;
+	left: 25vw;
+	width: 50vw;
+	background-color: #0e0e0ec8;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 0 16px 0 16px;
+	display: none;
+}
+
+#help_window > p > a{
+	color: #d1960f;
+	text-decoration: none;
+}
+
+#help_window > p > a:hover{
+	color: #d1960f;
+	text-decoration: underline;
+}
+
+#version_notice {
+	font-size: small;
+	text-align: right;
+}

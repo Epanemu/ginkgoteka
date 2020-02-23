@@ -112,9 +112,11 @@ m.getSignals().addListener(window, "map-contextmenu",
 function handleForm(event) { event.preventDefault(); }
 
 var add_point_form = document.getElementById("add_point_form");
-add_point_form.addEventListener('submit', handleForm);
+if (add_point_form)
+	add_point_form.addEventListener('submit', handleForm);
 var edit_point_form = document.getElementById("edit_point_form");
-edit_point_form.addEventListener('submit', handleForm);
+if (edit_point_form)
+	edit_point_form.addEventListener('submit', handleForm);
 
 function discardPoint() {
 	if (confirm("Opravdu chcete zrušit prováděné úpravy?")) {
@@ -240,3 +242,18 @@ $.fn.restrictInputs = function(restrictPattern){
 };
 
 $('input').restrictInputs();
+
+help_shown = false;
+$('#help_btn').click(e => {
+	console.log("huh");
+	if ($('#help_window').css("display") === 'none')
+		$('#help_window').css({display:'block'});
+	else
+		$('#help_window').css({display:'none'});
+	help_shown = true;
+});
+
+$('#map').click(e => {
+	help_shown = false;
+	$('#help_window').css({display:'none'});
+});
