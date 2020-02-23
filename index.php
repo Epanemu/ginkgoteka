@@ -12,6 +12,16 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 
+		<meta property="og:title" content="Ginkgotéka 20.oddílu Ginkgo z Českých Budějovic">
+		<meta property="og:description" content="Databáze nalezených stromů Ginkgo">
+		<meta property="og:image" content="https://dvacitka.skauting.cz/ginkgoteka/images/ginkgo-marker.png">
+		<meta property="og:url" content="https://dvacitka.skauting.cz/ginkgoteka">
+
+		<meta property="twitter:title" content="Ginkgotéka 20.oddílu Ginkgo z Českých Budějovic">
+		<meta property="twitter:description" content="Databáze nalezených stromů Ginkgo">
+		<meta property="twitter:image" content="https://dvacitka.skauting.cz/ginkgoteka/images/ginkgo-marker.png">
+		<meta property="twitter:card" content="summary">
+
 		<script src="https://api.mapy.cz/loader.js"></script>
 		<script src="jquery-3.4.1.min.js"></script>
 		<script>Loader.load()</script>
