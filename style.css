@@ -22,9 +22,10 @@ body {
 	top: 16px;
 	right: 16px;
 	z-index: 1;
-	width: 3em;
-	max-height: 8vmax;
-	max-width: 8vmax;
+	height: 12vmin;
+	width: 12vmin;
+	max-width: 50px;
+	max-height: 50px;
 }
 
 /*  ----------- CARD ------------  */
@@ -84,8 +85,7 @@ body {
 	box-shadow: 0 4px 16px 0 rgba(0,0,0,.2);
 
 	width: 312px;
-	max-height: 96vh;
-	max-width: 98vw;
+	max-height: 95vh;
 	overflow: auto;
 
 	z-index: 2;
@@ -129,6 +129,7 @@ body {
 	float: right;
 	display: flex;
 	flex-direction: column;
+	margin-left: 5px;
 	margin-bottom: 5px;
 }
 
@@ -265,5 +266,46 @@ body {
 		top: 5vh;
 		left: 5vw;
 		width: 90vw;
+	}
+
+	.form_container {
+		width: 100%;
+		margin: 0;
+		max-height: 60vh;
+		top: 0px;
+		left: 0px;
+		border-radius: 0 0 8px 8px;
+		font-size: medium;
+	}
+
+	.form_container input {
+		font-size: medium;
+	}
+
+	#add_point_name_input, #edit_point_name_input {
+		font-size: large;
+	}
+
+	.form_container button {
+		font-size: medium;
+	}
+
+	.point_form > p {
+		font-size: 1em;
+	}
+
+	.address_field {
+		font-size: 0.85em;
+	}
+
+	input[type=text] {
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+}
+
+@media (max-height: 400px)  {
+	.form_container {
+		max-height: 80vh;
 	}
 }
