@@ -18,7 +18,7 @@
 
     for ($i = 0; $i < count($user_arr); $i++) {
         list($width, $height) = getimagesize($user_arr[$i] -> img_path);
-        if ($height == IMAGE_SAVED_MIN_HEIGHT) {
+        if ($height <= IMAGE_SAVED_MIN_HEIGHT) {
             $user_arr[$i] -> img_style = "wide";
         } else {
             $user_arr[$i] -> img_style = "tall";

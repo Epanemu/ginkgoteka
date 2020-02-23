@@ -112,7 +112,7 @@
     if ($img_path !== null) {
         if ($img_path != "") {
             list($width, $height) = getimagesize($img_path);
-            if ($height == IMAGE_SAVED_MIN_HEIGHT) {
+            if ($height <= IMAGE_SAVED_MIN_HEIGHT) {
                 $img_style = "wide";
             } else {
                 $img_style = "tall";

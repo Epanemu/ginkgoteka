@@ -39,10 +39,12 @@ body {
 
 .ginkgo_card_img_wide {
 	height: 100% !important;
+	vertical-align: bottom;
 }
 
 .ginkgo_card_img_tall {
 	width: 100% !important;
+	vertical-align: bottom;
 }
 
 .ginkgo_card > p {
