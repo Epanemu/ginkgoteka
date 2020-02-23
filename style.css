@@ -245,3 +245,11 @@ body {
 	font-size: small;
 	text-align: right;
 }
+
+.smap .hud > * > *, .smap > * {
+	z-index: initial !important;
+}
+
+.smap .card {
+	z-index: 2;
+}
