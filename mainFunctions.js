@@ -51,6 +51,7 @@ function smaller_clusters(e, elm) {
 	}
 }
 m.getSignals().addListener(window, "zoom-stop", smaller_clusters);
+m.getSignals().addListener(window, "map-focus", (e, elm) => {m.removeCard()});
 
 // reading ginkgos
 const run = () => {
