@@ -210,8 +210,8 @@ body {
 
 #help_btn {
 	position: absolute;
-	left: 10px;
-	bottom: 14px;
+	left: 5px;
+	bottom: 18px;
 	z-index: 1;
 	width: 2em;
 	max-height: 8vmax;
@@ -227,8 +227,12 @@ body {
 	background-color: #0e0e0ec8;
 	color: white;
 	font-family: Arial, Helvetica, sans-serif;
-	padding: 0 16px 0 16px;
 	display: none;
+}
+
+#help_window > * {
+	margin-left: 16px;
+	margin-right: 16px;
 }
 
 #help_window > p > a{
@@ -252,4 +256,14 @@ body {
 
 .smap .card {
 	z-index: 2;
+}
+
+/* ------------ MOBILE ------------ */
+
+@media (max-width:450px)  {
+	#help_window {
+		top: 5vh;
+		left: 5vw;
+		width: 90vw;
+	}
 }
