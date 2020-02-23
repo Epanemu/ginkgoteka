@@ -257,4 +257,12 @@ $('#help_btn').click(e => {
 $('#map').click(e => {
 	help_shown = false;
 	$('#help_window').css({display:'none'});
+
+	$("#edit_point_author").blur();
+	$("#edit_point_date").blur();
+	$("#edit_point_name_input").blur();
+	$("#edit_point_img_picker").blur();
+	$("#add_point_author").blur();
+	$("#add_point_name_input").blur();
+	$("#add_point_img_picker").blur();
 });

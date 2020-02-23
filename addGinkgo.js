@@ -27,6 +27,7 @@ function addingPoint(coords) {
     smaller_clusters();
 
     JAK.gel("add_point_form_container").style.visibility = "visible";
+	$('#add_point_name_input').focus()
 }
 
 function addPoint() {
@@ -102,6 +103,10 @@ function addPoint() {
 					JAK.gel("add_point_name_input").value = "";
 					JAK.gel("add_point_img_picker").value = "";
 					JAK.gel("add_point_image_preview").style.display = "none";
+
+					$('#add_point_author').blur()
+					$('#add_point_name_input').blur()
+					$('#add_point_img_picker').blur()
 
 					var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id, data.img_style);
 					var g_marker = JAK.mel("div");

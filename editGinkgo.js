@@ -147,6 +147,11 @@ function editPoint() {
 					JAK.gel("edit_point_incorrect_image_type").style.display = "none";
 
                     var c = createCard(data.name, data.address, data.author, data.date_added, data.img_path, data.id);
+					$("#edit_point_author").blur();
+					$("#edit_point_date").blur();
+					$("#edit_point_name_input").blur();
+					$("#edit_point_img_picker").blur();
+
 					var g_marker = JAK.mel("div");
 					var g_image = JAK.mel("img", {src:"./images/ginkgo-marker.png"});
 					g_marker.appendChild(g_image);
