@@ -124,13 +124,13 @@
         }
 
         $data = [
-            "name" => $_POST["name"],
-            "author" => $_POST["author"] == "" ? "Anonym" : $_POST["author"],
-            "coords" => $_POST["coords"],
-            "address" => $_POST["address"],
+            "name" => htmlspecialchars($_POST["name"]),
+            "author" => $_POST["author"] == "" ? "Anonym" : htmlspecialchars($_POST["author"]),
+            "coords" => htmlspecialchars($_POST["coords"]),
+            "address" => htmlspecialchars($_POST["address"]),
             "img_path" => $img_path,
             "img_style" => $img_style,
-            "date_added" => date("Y-m-d H:i:s", isset($_POST["timestamp"]) ? $_POST["timestamp"] : time()),
+            "date_added" => date("Y-m-d H:i:s", isset($_POST["timestamp"]) ? htmlspecialchars($_POST["timestamp"]) : time()),
             // Potential #adds/ip/hour check to protect from spam...
             //"ip_address" => $_SERVER['REMOTE_ADDR'],
         ];

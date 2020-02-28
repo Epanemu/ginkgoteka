@@ -218,32 +218,6 @@ function _removeGinkgo(id) {
 	});
 }
 
-$.fn.restrictInputs = function(restrictPattern){
-    var targets = $(this);
-
-    // The characters inside this pattern are accepted
-    // and everything else will be 'cleaned'
-    // For example 'ABCdEfGhI5' become 'ABCEGI5'
-    var pattern = restrictPattern ||
-        /[^0-9A-Za-z !#$%()*+,\-\/.:=?@\[\]^_{|}]*/g; // default pattern
-
-    var restrictHandler = function(){
-        var val = $(this).val();
-        var newVal = val.replace(pattern, '');
-
-        // This condition is to prevent selection and keyboard navigation issues
-        if (val !== newVal) {
-            $(this).val(newVal);
-        }
-    };
-
-    targets.on('keyup', restrictHandler);
-    targets.on('paste', restrictHandler);
-    targets.on('change', restrictHandler);
-};
-
-$('input').restrictInputs();
-
 $('#help_btn').click(e => {
 	if ($('#help_window').css("display") === 'none')
 		$('#help_window').css({display:'block'});
