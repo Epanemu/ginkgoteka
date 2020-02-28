@@ -11,14 +11,14 @@ if (navigator.geolocation) {
 		error => {console.error(error)},
 		{enableHighAccuracy: true});
 }
-m.addDefaultLayer(SMap.DEF_BASE).enable();
-m.addDefaultLayer(SMap.DEF_OPHOTO);
+m.addDefaultLayer(SMap.DEF_BASE);
+m.addDefaultLayer(SMap.DEF_OPHOTO).enable();
 m.addDefaultLayer(SMap.DEF_TURIST);
 
 
 var c = new SMap.Control.Layer({title:"Posun mapy", items: 3, page: 3});
-c.addDefaultLayer(SMap.DEF_BASE);
 c.addDefaultLayer(SMap.DEF_OPHOTO);
+c.addDefaultLayer(SMap.DEF_BASE);
 c.addDefaultLayer(SMap.DEF_TURIST);
 m.addControl(c, {left:"10px", top:"10px"});
 
