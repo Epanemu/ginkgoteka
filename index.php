@@ -89,7 +89,7 @@
 					if ($logged)
 						echo '<p>Jste v <b>upravovacím módu</b>.<p/><p>Můžete <b>přidat ginkgo</b> stisknutím pravého tlačítka na konkrétní místo v mapě a nebo tlačítka plus v pravém horním rohu.<br />Poté se do mapy vloží zelený znak ginkga. Takové ginkgo je možné posouvat libovolně po mapě. Vyplňte formulář a potvrďte. Po potvrzení se veškeré informace, včetně polohy, uloží.<p/><p>Pro <b>úpravu</b> nebo <b>smazání</b> ginkga otevřte příslušné okno a vpravo nahoře vyberte akci. Pak postupujte obdobně.</p>';
 					else
-						echo '<p>Jste v <b>prohlížecím módu</b>.</p><p>Pro zobrazení více inforamcí klikněte na jednotlivé ikony ginkga.<br/>Pokud chcete přidávat, upravovat a nebo odebírat Ginkga, musíte se přihlásit tak jako když jdete do <a href="https://dvacitka.skauting.cz/vedeni.php">sekce vedení</a>.</p>';
+						echo '<p>Jste v <b>prohlížecím módu</b>.</p><p>Pro zobrazení více informací klikněte na jednotlivé ikony ginkga.<br/>Pokud chcete přidávat, upravovat a nebo odebírat Ginkga, musíte se přihlásit tak jako když jdete do <a href="https://dvacitka.skauting.cz/vedeni.php">sekce vedení</a>.</p>';
 				?>
 				<p id="version_notice">Ginkotéka <?php echo $version?></p>
 			</div>
