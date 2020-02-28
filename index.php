@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	session_start();
 	$logged = isset($_SESSION['loginID']);
 	$version = 'v1.0';
 ?>
