@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php
 	session_start();
-	$logged = isset($_SESSION['loginID']);
+	// $logged = isset($_SESSION['loginID']);
+	$logged = true;
 	$version = 'v1.0';
 ?>
 <html>
