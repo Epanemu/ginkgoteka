@@ -25,7 +25,8 @@
 		<meta property="twitter:card" content="summary">
 
 		<script src="https://api.mapy.cz/loader.js"></script>
-		<script src="jquery-3.4.1.min.js"></script>
+		<!-- <script src="jquery-3.4.1.min.js"></script> -->
+		<script src="jquery-3.7.1.min.js"></script>
 		<script>Loader.load()</script>
 	</head>
 	<body>
